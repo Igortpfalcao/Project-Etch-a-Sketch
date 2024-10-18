@@ -13,12 +13,12 @@ const generatecolors = function(){
 
 generatecolors();
 
-let currentindex = 0;
+
 
 const createGrid = function(scale){
     
     container.innerHTML = '';
-    currentindex = 0;
+    
     
     for (let row = 0; row < scale; row++){
         let div = document.createElement("div");
@@ -26,6 +26,7 @@ const createGrid = function(scale){
         for (let column = 0; column < scale; column++){
             let internal = document.createElement("div");
             internal.style.cssText = "display: flex; border: solid 1px black; flex: 1; height: 100%;"
+            internal.style.backgroundColor = colors [0];
             internal.addEventListener("mouseover", () => hovering(internal));
             div.appendChild(internal);
         }
@@ -36,12 +37,21 @@ const createGrid = function(scale){
 }
 
 const hovering = function(square){
-    if (currentindex < 6){
-        square.style.backgroundColor = colors[currentindex];
-        currentindex += 1;
+    let current = currentcolor(square);
+    if (current == 5){
+        square.style.backgroundColor = colors[0];
     }
     else{
-        currentindex = 0
-        square.style.backgroundColor = colors[currentindex];
+        square.style.backgroundColor = colors[current + 1];
     }
+    
+}
+
+const currentcolor = function(square){
+    for (let color = 0; color < 6; color++ ){
+        if (square.style.backgroundColor == colors[color]){
+            return color;
+        }
+    }
+    return "ERROR";
 }
